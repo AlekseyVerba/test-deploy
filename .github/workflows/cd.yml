@@ -5,7 +5,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
-
+env:
+  PATH_FOLDER: /root/ai-vision
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -23,5 +24,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: 22
         script: |
-          cd ~
-          mkdir lo
+          cd {{env.PATH_FOLDER}}
+          git pull origin master
+          cd {{env.PATH_FOLDER}}/controller-microservice
+          npm run build
